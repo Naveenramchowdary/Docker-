@@ -13,14 +13,14 @@ MAINTAINER "Naveen Ram  <ramchowdary.pentyala@gmail.com>"
 
 
 ENV NAGIOS_USER                nagios
-ENV NAGIOS_CMD_GROUP		   nagcmd
+ENV NAGIOS_CMD_GROUP	       nagcmd
 ENV APACHE_USER                apache
 ENV NAGIOS_TAR                 https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.1.1.tar.gz
 ENV NAGIOS_SRC                 nagios-4.1.1
 ENV NAGIOS_PLUGINS_TAR         http://nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
-ENV NAGIOS_PLUGINS_SRC		   nagios-plugins-2.1.1
-ENV NAGIOS_NRPE_TAR			   http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
-ENV NAGIOS_NRPE_SRC 		   nrpe-2.15
+ENV NAGIOS_PLUGINS_SRC	       nagios-plugins-2.2.1
+ENV NAGIOS_NRPE_TAR	       http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+ENV NAGIOS_NRPE_SRC 	       nrpe-2.15
 
 RUN yum update -y
 
@@ -36,9 +36,9 @@ RUN cd $NAGIOS_SRC && ./configure --with-command-group=nagcmd
 
 RUN cd $NAGIOS_SRC &&make all && make install && make install-commandmode && make install-init && make install-config && make install-webconf
 
-RUN  usermod -G $NAGIOS_CMD_GROUP $APACHE_USER 
+RUN usermod -G $NAGIOS_CMD_GROUP $APACHE_USER 
 
-RUN  cd ~ && curl -L -O $NAGIOS_PLUGINS_TAR  && tar xvf nagios-plugins-2.1.1.tar.gz
+RUN cd / && curl -L -O $NAGIOS_PLUGINS_TAR  && tar xvf nagios-plugins-2.2.1.tar.gz
 
 RUN cd $NAGIOS_PLUGINS_SRC && ./configure --with-nagios-user=nagios --with-nagios-group=nagios --with-openssl 
 
